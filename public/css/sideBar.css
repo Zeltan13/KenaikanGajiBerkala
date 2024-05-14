@@ -1,0 +1,33 @@
+#home{
+    text-decoration: none; /* Menghilangkan underline */
+    color: inherit; /* Mengambil warna default teks */
+    cursor: pointer; /* Menampilkan kursor tangan saat dihover */
+
+}
+#profil{
+    text-decoration: none; /* Menghilangkan underline */
+    color: inherit; /* Mengambil warna default teks */
+    cursor: pointer; /* Menampilkan kursor tangan saat dihover */
+}
+.text-Sidebar{
+    margin-left: 50px;
+}
+.sidebar ul{
+    list-style-type: none;
+    padding-left: 0px;
+}
+.menu{
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+ul li{
+    width: 100px;
+    margin-left: 25px;
+    margin-bottom: 20px; /* Memberikan jarak 10px antara setiap elemen li */
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
