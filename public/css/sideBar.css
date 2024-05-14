@@ -15,10 +15,14 @@
 .sidebar ul{
     list-style-type: none;
     padding-left: 0px;
+    margin-bottom: 600px;
 }
 .menu{
     border: 1px solid #000;
     border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 10px;
+    margin-bottom: -100px;
 }
 ul li{
     width: 100px;
@@ -28,6 +32,7 @@ ul li{
     border: 1px solid #000;
     border-radius: 5px;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 

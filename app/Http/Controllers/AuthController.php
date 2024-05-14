@@ -39,5 +39,12 @@ class AuthController extends Controller
         // If the passwords don't match, redirect back with an error message
         return back()->with('error', 'NIP atau Password salah');
     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        Session::flush();
+        return redirect('/')->with('success', 'Logout Berhasil');
+    }
+
     
 }

@@ -1,0 +1,10 @@
+.content{
+   border: 1px solid black;
+   margin-left: 200px;
+   padding: 10px;
+   border-radius: 5px;
+}
+
+.content button{
+    margin-bottom: 630px;
+}

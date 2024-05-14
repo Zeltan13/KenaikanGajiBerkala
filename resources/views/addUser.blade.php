@@ -9,6 +9,7 @@
     <title>User Form</title>
 </head>
 <body>
+    <div class="container mt-5 col-md-5">
             <h1>User Form</h1>
             <form action="/home/users/add" method="post">
                 <!-- <label for="roleId">Role ID:</label>
@@ -48,6 +49,6 @@
                             
                 <button type="submit">Submit</button>
             </form>
-        
+            </div>
 </body>
 </html>
