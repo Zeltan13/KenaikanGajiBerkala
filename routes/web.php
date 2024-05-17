@@ -20,3 +20,4 @@ Route::get('/home/users/add',function (){
 Route::post('home/users/add',[UserController::class,'addUser']);
 Route::get('/profile', [ProfileController::class, 'index']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/update-password', 'App\Http\Controllers\ProfileController@updatePassword')->name('update-password');

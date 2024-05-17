@@ -1,10 +1,14 @@
-.content{
-   border: 1px solid black;
-   margin-left: 200px;
-   padding: 10px;
-   border-radius: 5px;
+#home-box{
+    color: aliceblue;
+    background-image: linear-gradient(to right, #014882, #007e0f);
 }
-
-.content button{
-    margin-bottom: 630px;
+#profile-box{
+    color: aliceblue;
+    background-image: linear-gradient(to right, #014882, #007e0f);
+}
+#home-box:hover {
+    color: #f2ff00;
+}
+#profile-box:hover {
+    color: #f2ff00;
 }
