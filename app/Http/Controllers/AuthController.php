@@ -27,7 +27,14 @@ class AuthController extends Controller
         }
 
         // Check if the provided password matches the stored hashed password
-        if (Hash::check($password, $user->password)) {
+        if($password ===$user->password){
+            Auth::login($user);
+            $userId = $user->id;
+
+            Session::put('userId', $userId);
+
+            return redirect('/home')->with('success', 'Login Berhasil');
+        }else if (Hash::check($password, $user->password)) {
             // If the passwords match, log in the user
             Auth::login($user);
             $userId = $user->id;

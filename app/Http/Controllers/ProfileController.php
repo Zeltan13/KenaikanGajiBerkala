@@ -23,8 +23,30 @@ public function updatePassword(Request $request)
     $user = Auth::user();
 
     // Periksa apakah password yang dimasukkan pengguna sesuai dengan password yang disimpan
-    if (!Hash::check($request->current_password, $user->password)) {
-        return redirect()->back()->withErrors(['current_password' => 'Password saat ini tidak sesuai']);
+    $isPlainTextPassword = !preg_match('/^\$2[ayb]\$.{56}$/', $user->password);
+
+    if ($isPlainTextPassword) {
+        // If the password is plain text, check if the plain text passwords match
+        if ($request->current_password !== $user->password) {
+            return redirect()->back()->withErrors(['current_password' => 'Password saat ini tidak sesuai']);
+        }
+
+        // Once the plain text password is verified, hash the new password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password berhasil diubah');
+    } else {
+        // If the password is hashed, use Hash::check to verify
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Password saat ini tidak sesuai']);
+        }
+
+        // Update the password with the new hashed password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password berhasil diubah');
     }
 
     // Update password dengan password baru yang telah di-hash
