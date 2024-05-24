@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use App\Models\User;
+// use App\Models\User;
+use App\Models\Pegawai;
 use App\Models\Role;
 
 
@@ -11,7 +12,7 @@ class UserController extends Controller
 {
     public function getAllUsers(){
         $id = Session::get('userId');
-        $users = User::all();
+        $users = Pegawai::all();
         
         $roles = Role::all();
         return view('users',['users'=>$users, 'roles'=>$roles, 'id'=>$id]);

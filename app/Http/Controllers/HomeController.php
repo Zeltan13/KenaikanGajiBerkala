@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\UserData;
+use App\Models\Pegawai;
+// use App\Models\User;
+// use App\Models\UserData;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -13,8 +14,8 @@ class HomeController extends Controller
     public function index()
     {
         $userId = Session::get('userId');
-        $user = User::where('id', $userId)->first();
-        $datas = UserData::where('userId', $userId)->first();
+        $user = Pegawai::where('id', $userId)->first();
+        $datas = Pegawai::where('id', $userId)->first();
 
         if ($datas) {
             $golonganPangkat = $datas->golonganPangkat;

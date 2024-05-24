@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\UserData;
+// use App\Models\UserData;
+use App\Models\Pegawai;
 
 class UserDataController extends Controller
 {
     function getAllUserData(){
-        $datas = UserData::all();
+        $datas = Pegawai::all();
         return view('userData',['datas'=>$datas]);
     }
 }
