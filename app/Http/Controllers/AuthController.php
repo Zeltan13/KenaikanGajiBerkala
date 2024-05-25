@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-// use App\Models\User;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +18,10 @@ class AuthController extends Controller
     {
         $nip = $request->nip;
         $password = $request->password;
-    
+        
         // Retrieve the user by NIP
         $user = Pegawai::where('nip', $nip)->first();
-    
+        
         if (!$user) {
             return back()->with('error', 'NIP atau Password salah');
         }
@@ -35,8 +34,14 @@ class AuthController extends Controller
                 $userId = $user->id;
     
                 Session::put('userId', $userId);
-    
-                return redirect('/home')->with('success', 'Login Berhasil');
+
+                $role = $user->roleId;
+                Session::put('role', $role);
+                if ($role == 1) {
+                    return redirect('/admin')->with('success', 'Login Berhasil');
+                } else {
+                    return redirect('/home')->with('success', 'Login Berhasil');
+                }
             }  
         } else {
             if (Hash::check($password, $user->password)) {
@@ -46,7 +51,13 @@ class AuthController extends Controller
     
                 Session::put('userId', $userId);
     
-                return redirect('/home')->with('success', 'Login Berhasil');
+                $role = $user->roleId;
+                Session::put('role', $role);
+                if ($role == 1) {
+                    return redirect('/admin')->with('success', 'Login Berhasil');
+                } else {
+                    return redirect('/home')->with('success', 'Login Berhasil');
+                }
             }
         }
         // If the passwords don't match, redirect back with an error message

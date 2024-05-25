@@ -30,6 +30,25 @@ class HomeController extends Controller
 
         return view('home', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate]);
     }
+    public function admin()
+    {
+        $userId = Session::get('userId');
+        $user = Pegawai::where('id', $userId)->first();
+        $datas = Pegawai::where('id', $userId)->first();
+
+        if ($datas) {
+            $golonganPangkat = $datas->golonganPangkat;
+            $masaKerjaTahun = $datas->masaKerjaTahun;
+            $masaKerjaBulan = $datas->masaKerjaBulan;
+            $tmtGolongan = Carbon::parse($datas->tmtGolongan);
+            $timeToKGB = $this->calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan);
+            $kgbDate = $tmtGolongan->addMonths($timeToKGB);
+        } else {
+            $kgbDate = null;
+        }
+
+        return view('home_admin', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate]);
+    }
 
     private function calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan)
     {
