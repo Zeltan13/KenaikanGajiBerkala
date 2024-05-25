@@ -16,6 +16,7 @@
             <ul class="list-group">
                 <li id="home-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/home') }}';">Home</li> <br>
                 <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/profile') }}';">Profile</li>
+                
             </ul>
         </div>
       </div>

@@ -15,7 +15,7 @@
             <img src="{{ asset('image/logo BKPSDM.png') }}" class="img-fluid" alt="Deskripsi Gambar">
             <ul class="list-group">
                 <li id="home-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/admin') }}';">Home</li> <br>
-                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/profile') }}';">Profile</li>
+                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/profile_admin') }}';">Profile</li> <br>
                 <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/editData') }}';">Edit Data</li>
             </ul>
         </div>

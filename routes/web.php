@@ -11,6 +11,7 @@ Route::post('/login',[AuthController::class,'loginPost'])->name('login');
 
 Route::get('/home',[HomeController::class,'index']);
 Route::get('/admin',[HomeController::class,'admin']);
+Route::get('/profile_admin',[ProfileController::class,'index2']);
 // Route::get('/home',[HomeController::class,'getAllUserData']);
 Route::get('/home/users',[Pegawai::class,'getAllUsers']);
 Route::get('/home/userdata',[Pegawai::class,'getAllUserData']);
