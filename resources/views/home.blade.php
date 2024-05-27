@@ -22,7 +22,8 @@
       </div>
       <div class="col-md-10 col-sm-10 mt-sm-4 border">
         <h1>Selamat datang, {{ $dataStatisUser->nama }} </h1>
-        <p>Pada {{ $kgbDate ? $kgbDate->format('Y-m-d') : 'No KGB Date' }} adalah Kenaikan Gaji Berkala anda</p>
+        <p>Pada {{ $kgbDate ? $kgbDate->format('Y-m-d') : 'No KGB Date' }} adalah Kenaikan Gaji Berkala anda di tahun {{ $yearKGB }}</p>
+
         <hr class="col-md-10 mb-sm-5">
         <div class="row">
           <div class="col-md-10 mb-sm-5" >

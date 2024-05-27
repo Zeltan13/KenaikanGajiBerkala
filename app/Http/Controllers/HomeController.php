@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
-// use App\Models\User;
-// use App\Models\UserData;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -24,12 +24,15 @@ class HomeController extends Controller
             $tmtGolongan = Carbon::parse($datas->tmtGolongan);
             $timeToKGB = $this->calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan);
             $kgbDate = $tmtGolongan->addMonths($timeToKGB);
+            $yearKGB = $timeToKGB-$masaKerjaTahun;
         } else {
             $kgbDate = null;
+            $yearKGB = null;
         }
 
-        return view('home', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate]);
+        return view('home', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate, 'yearKGB' => $yearKGB]);
     }
+
     public function admin()
     {
         $userId = Session::get('userId');
@@ -40,14 +43,17 @@ class HomeController extends Controller
             $golonganPangkat = $datas->golonganPangkat;
             $masaKerjaTahun = $datas->masaKerjaTahun;
             $masaKerjaBulan = $datas->masaKerjaBulan;
+            $tmtGol = $datas->tmtGolongan;
             $tmtGolongan = Carbon::parse($datas->tmtGolongan);
             $timeToKGB = $this->calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan);
             $kgbDate = $tmtGolongan->addMonths($timeToKGB);
+            $yearKGB = $tmtGolongan->year;
         } else {
             $kgbDate = null;
+            $yearKGB = null;
         }
 
-        return view('home_admin', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate]);
+        return view('home_admin', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate, 'yearKGB' => $yearKGB]);
     }
 
     private function calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan)

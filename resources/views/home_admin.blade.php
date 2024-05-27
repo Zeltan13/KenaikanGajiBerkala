@@ -15,14 +15,14 @@
             <img src="{{ asset('image/logo BKPSDM.png') }}" class="img-fluid" alt="Deskripsi Gambar">
             <ul class="list-group">
                 <li id="home-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/admin') }}';">Home</li> <br>
-                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/profile_admin') }}';">Profile</li> <br>
-                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/editData') }}';">Edit Data</li>
+                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/admin/profile') }}';">Profile</li> <br>
+                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/admin/users') }}';">Edit Data</li>
             </ul>
         </div>
       </div>
       <div class="col-md-10 col-sm-10 mt-sm-4 border">
         <h1>Selamat datang, {{ $dataStatisUser->nama }} </h1>
-        <p>Pada {{ $kgbDate ? $kgbDate->format('Y-m-d') : 'No KGB Date' }} adalah Kenaikan Gaji Berkala anda</p>
+        <p>Pada {{ $kgbDate ? $kgbDate->format('Y-m-d') : 'No KGB Date' }} adalah Kenaikan Gaji Berkala anda di tahun {{ $yearKGB }}</p>
         <hr class="col-md-10 mb-sm-5">
         <div class="row">
           <div class="col-md-10 mb-sm-5" >

@@ -29,3 +29,20 @@ class Pegawai extends Model implements AuthenticatableContract
         'masaKerjaBulan',
     ];
 }
+class User extends Model
+{
+    use HasFactory;
+
+    // Tentukan field yang bisa diisi
+    protected $fillable = [
+        'roleId',
+        'nip',
+        'password',
+        'nama',
+        'ttl',
+    ];
+
+    // Jika Anda menggunakan nama tabel atau primary key yang berbeda, tentukan di sini
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+}
