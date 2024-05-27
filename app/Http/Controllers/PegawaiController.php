@@ -152,8 +152,8 @@ class PegawaiController extends Controller
         $user->masaKerjaBulan = $request->masaKerjaBulan;
 
         $user->save();
-        return view('editUser', ['user' => $user]);
-        // return redirect('/home/users')->with('success', 'User updated successfully');
+        
+        return redirect('/home/users')->with('success', 'User updated successfully');
     }
 
 

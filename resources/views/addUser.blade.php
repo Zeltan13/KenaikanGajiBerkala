@@ -11,12 +11,12 @@
 <body>
     <div class="container mt-5 col-md-5">
         <h1>{{ isset($user) ? 'Edit Pegawai' : 'Tambah Pegawai' }}</h1>
-        <form id="pegawaiForm" method="POST" action="{{ route('save-user',['user' => $user]) }}">
+        <form id="pegawaiForm" method="POST" action="{{ route('save-user') }}">
             @csrf
-            <input type="hidden" id="user_id" name="user_id" value="{{ $user=>id }}">
+            <input type="hidden" id="user_id" name="user_id" value="{{ isset($user) ? $user->id : '' }}">
             <div class="mb-3">
                 <label for="roleId" class="form-label">Role ID</label>
-                <input type="text" class="form-control" id="roleId" name="roleId" value="{{ $user=>roleId }}" required>
+                <input type="text" class="form-control" id="roleId" name="roleId" value="{{ isset($user) ? $user->roleId : '' }}" required>
             </div>
             <div class="mb-3">
                 <label for="nip" class="form-label">NIP</label>
