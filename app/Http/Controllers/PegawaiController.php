@@ -14,7 +14,7 @@ class PegawaiController extends Controller
     {
         $id = Session::get('userId');
         $users = Pegawai::all();
-        return view('admin_edit', ['users' => $users, 'id' => $id]);
+        return view('admin_edit', ['users' => $users, 'id' => $id, 'query' => '']);
     }
     public function editUserForm()
 {
@@ -53,37 +53,6 @@ class PegawaiController extends Controller
 
         return redirect('/home/users')->with('success', 'User added successfully');
     }
-
-    // Function to edit a user
-    // public function editUser(Pegawai $id)
-    // {
-    //     $user = Pegawai::find($request->user_id);
-    
-    //     if (!$user) {
-    //         return redirect('/home/users')->with('error', 'User not found');
-    //     }
-    
-    //     $user->roleId = $request->roleId;
-    //     $user->nip = $request->nip;
-    //     if ($request->password) {
-    //         $user->password = bcrypt($request->password); // Hashing the password
-    //     }
-    //     $user->nama = $request->nama;
-    //     $user->ttl = $request->ttl;
-    //     $user->satuanKerja = $request->satuanKerja;
-    //     $user->golonganPangkat = $request->golonganPangkat;
-    //     $user->tmtGolongan = $request->tmtGolongan;
-    //     $user->tmtJabatan = $request->tmtJabatan;
-    //     $user->statusPegawai = $request->statusPegawai;
-    //     $user->tmtPegawai = $request->tmtPegawai;
-    //     $user->masaKerjaTahun = $request->masaKerjaTahun;
-    //     $user->masaKerjaBulan = $request->masaKerjaBulan;
-    
-    //     $user->save();
-    
-    //     return redirect('/home/users')->with('success', 'User updated successfully');
-    // }
-    
 
     // Function to get all user data
     public function getAllUserData()
@@ -155,6 +124,33 @@ class PegawaiController extends Controller
         
         return redirect('/home/users')->with('success', 'User updated successfully');
     }
+
+    public function deleteUser($id)
+{
+    $user = Pegawai::find($id);
+
+    if (!$user) {
+        return redirect()->route('user-list')->with('error', 'User not found');
+    }
+
+    $user->delete();
+
+    return redirect()->route('user-list')->with('success', 'User deleted successfully');
+}
+
+
+    // Function to search users
+    public function searchUser(Request $request)
+    {
+        $query = $request->input('query');
+        $users = Pegawai::where('nama', 'LIKE', "%$query%")
+                        ->orWhere('nip', 'LIKE', "%$query%")
+                        ->orWhere('satuanKerja', 'LIKE', "%$query%")
+                        ->get();
+
+        return view('admin_edit', ['users' => $users, 'query' => $query]);
+    }
+    
 
 
 }

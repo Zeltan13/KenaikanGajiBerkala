@@ -42,6 +42,7 @@ Route::get('/admin/users/edit', [PegawaiController::class, 'editUserForm'])->nam
 // Route::post('/edit-user', [UserController::class, 'editUser'])->name('edit-user');
 Route::post('/save-user', [PegawaiController::class, 'saveUser'])->name('save-user');
 Route::post('/admin/users/{id}/edit', [PegawaiController::class, 'editUser'])->name('edit-user');
-
+Route::delete('/admin/users/{id}', [PegawaiController::class, 'deleteUser'])->name('delete-user');
+Route::get('/admin/users/search', [PegawaiController::class, 'searchUser'])->name('search-user');
 
 
