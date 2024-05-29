@@ -11,16 +11,15 @@
 <body>
     <div class="container mt-5 col-md-5">
         <h1>Edit Pegawai</h1>
-        <form id="pegawaiForm" method="POST" action="">
+        <form id="pegawaiForm" method="POST" action="{{ route('updateUser', ['id' => $user->id]) }}">
             @csrf
-            <input type="hidden" id="user_id" name="user_id" value="{{ isset($user) ? $user->id : '' }}">
             <div class="mb-3">
                 <label for="roleId" class="form-label">Role ID</label>
-                <input type="text" class="form-control" id="roleId" name="roleId" value="{{ isset($user) ? $user->roleId : '' }}" required>
+                <input type="text" class="form-control" id="roleId" name="roleId" value="{{ $user->roleId }}" required>
             </div>
             <div class="mb-3">
                 <label for="nip" class="form-label">NIP</label>
-                <input type="text" class="form-control" id="nip" name="nip" value="{{ isset($user) ? $user->nip : '' }}" required>
+                <input type="text" class="form-control" id="nip" name="nip" value="{{ $user->nip }}" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
@@ -28,55 +27,46 @@
             </div>
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" value="{{ isset($user) ? $user->nama : '' }}" required>
+                <input type="text" class="form-control" id="nama" name="nama" value="{{ $user->nama }}" required>
             </div>
             <div class="mb-3">
                 <label for="ttl" class="form-label">Tanggal Lahir</label>
-                <input type="text" class="form-control" id="ttl" name="ttl" value="{{ isset($user) ? $user->ttl : '' }}" required>
+                <input type="text" class="form-control" id="ttl" name="ttl" value="{{ $user->ttl }}" required>
             </div>
             <div class="mb-3">
                 <label for="satuanKerja" class="form-label">Satuan Kerja</label>
-                <input type="text" class="form-control" id="satuanKerja" name="satuanKerja" value="{{ isset($user) ? $user->satuanKerja : '' }}" required>
+                <input type="text" class="form-control" id="satuanKerja" name="satuanKerja" value="{{ $user->satuanKerja }}" required>
             </div>
             <div class="mb-3">
                 <label for="golonganPangkat" class="form-label">Golongan Pangkat</label>
-                <input type="text" class="form-control" id="golonganPangkat" name="golonganPangkat" value="{{ isset($user) ? $user->golonganPangkat : '' }}" required>
+                <input type="text" class="form-control" id="golonganPangkat" name="golonganPangkat" value="{{ $user->golonganPangkat }}" required>
             </div>
             <div class="mb-3">
                 <label for="tmtGolongan" class="form-label">TMT Golongan</label>
-                <input type="text" class="form-control" id="tmtGolongan" name="tmtGolongan" value="{{ isset($user) ? $user->tmtGolongan : '' }}" required>
+                <input type="text" class="form-control" id="tmtGolongan" name="tmtGolongan" value="{{ $user->tmtGolongan }}" required>
             </div>
             <div class="mb-3">
                 <label for="tmtJabatan" class="form-label">TMT Jabatan</label>
-                <input type="text" class="form-control" id="tmtJabatan" name="tmtJabatan" value="{{ isset($user) ? $user->tmtJabatan : '' }}" required>
+                <input type="text" class="form-control" id="tmtJabatan" name="tmtJabatan" value="{{ $user->tmtJabatan }}" required>
             </div>
             <div class="mb-3">
                 <label for="statusPegawai" class="form-label">Status Pegawai</label>
-                <input type="text" class="form-control" id="statusPegawai" name="statusPegawai" value="{{ isset($user) ? $user->statusPegawai : '' }}" required>
+                <input type="text" class="form-control" id="statusPegawai" name="statusPegawai" value="{{ $user->statusPegawai }}" required>
             </div>
             <div class="mb-3">
                 <label for="tmtPegawai" class="form-label">TMT Pegawai</label>
-                <input type="text" class="form-control" id="tmtPegawai" name="tmtPegawai" value="{{ isset($user) ? $user->tmtPegawai : '' }}" required>
+                <input type="text" class="form-control" id="tmtPegawai" name="tmtPegawai" value="{{ $user->tmtPegawai }}" required>
             </div>
             <div class="mb-3">
                 <label for="masaKerjaTahun" class="form-label">Masa Kerja (Tahun)</label>
-                <input type="text" class="form-control" id="masaKerjaTahun" name="masaKerjaTahun" value="{{ isset($user) ? $user->masaKerjaTahun : '' }}" required>
+                <input type="text" class="form-control" id="masaKerjaTahun" name="masaKerjaTahun" value="{{ $user->masaKerjaTahun }}" required>
             </div>
             <div class="mb-3">
                 <label for="masaKerjaBulan" class="form-label">Masa Kerja (Bulan)</label>
-                <input type="text" class="form-control" id="masaKerjaBulan" name="masaKerjaBulan" value="{{ isset($user) ? $user->masaKerjaBulan : '' }}" required>
+                <input type="text" class="form-control" id="masaKerjaBulan" name="masaKerjaBulan" value="{{ $user->masaKerjaBulan }}" required>
             </div>
             <button type="submit" id="editButton" class="btn btn-secondary">Edit</button>
         </form>
     </div>
-
-    <script>
-        document.getElementById('pegawaiForm').addEventListener('submit', function (event) {
-            var userId = document.getElementById('user_id').value;
-            if (userId) {
-                this.action = '/admin/users/' + userId + '/edit';
-            }
-        });
-    </script>
 </body>
 </html>

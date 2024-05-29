@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
+
 
 class PegawaiController extends Controller
 {
@@ -68,9 +70,15 @@ class PegawaiController extends Controller
         }
         return view('editUser', ['user' => $user]);
     }
-    public function edit(Pegawai $pegawai){
-        return view('editUser',['pegawai'=>$pegawai]);
+    // public function edit(Pegawai $pegawai){
+    //     return view('editUser',['pegawai'=>$pegawai]);
+    // }
+    public function edit($id)
+    {
+        $user = Pegawai::findOrFail($id);
+        return view('editUser', ['user' => $user]);
     }
+
     public function saveUser(Request $request)
     {
         if ($request->action == 'add') {
@@ -151,6 +159,44 @@ class PegawaiController extends Controller
         return view('admin_edit', ['users' => $users, 'query' => $query]);
     }
     
+   
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'roleId' => 'required',
+            'nip' => 'required',
+            'nama' => 'required',
+            'ttl' => 'required',
+            'satuanKerja' => 'required',
+            'golonganPangkat' => 'required',
+            'tmtGolongan' => 'required',
+            'tmtJabatan' => 'required',
+            'statusPegawai' => 'required',
+            'tmtPegawai' => 'required',
+            'masaKerjaTahun' => 'required',
+            'masaKerjaBulan' => 'required',
+        ]);
 
+        $user = Pegawai::findOrFail($id);
+        $user->roleId = $request->roleId;
+        $user->nip = $request->nip;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->nama = $request->nama;
+        $user->ttl = $request->ttl;
+        $user->satuanKerja = $request->satuanKerja;
+        $user->golonganPangkat = $request->golonganPangkat;
+        $user->tmtGolongan = $request->tmtGolongan;
+        $user->tmtJabatan = $request->tmtJabatan;
+        $user->statusPegawai = $request->statusPegawai;
+        $user->tmtPegawai = $request->tmtPegawai;
+        $user->masaKerjaTahun = $request->masaKerjaTahun;
+        $user->masaKerjaBulan = $request->masaKerjaBulan;
+
+        $user->save();
+
+        return redirect()->route('user-list')->with('success', 'User updated successfully');
+    }
 
 }
