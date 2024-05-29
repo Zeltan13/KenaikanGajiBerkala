@@ -62,7 +62,7 @@
                     <td>{{ $user->masaKerjaTahun}}</td>
                     <td>{{ $user->masaKerjaBulan}}</td>
                     <td>
-                        <a href="{{ route('edit-user', $user->id) }}" class="btn btn-secondary">Edit</a>
+                        <a href="{{ route('editUser', $user->id) }}" class="btn btn-secondary">Edit</a>
                         <form action="{{ route('delete-user', $user->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')

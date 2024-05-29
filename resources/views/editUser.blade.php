@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-5 col-md-5">
         <h1>Edit Pegawai</h1>
-        <form id="pegawaiForm" method="POST" action="{{ route('updateUser', ['id' => $user->id]) }}">
+        <form id="pegawaiForm" method="POST" action="{{ route('editUser', ['id' => $user->id]) }}">
             @csrf
             <div class="mb-3">
                 <label for="roleId" class="form-label">Role ID</label>
