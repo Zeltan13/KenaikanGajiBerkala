@@ -28,6 +28,18 @@ class Pegawai extends Model implements AuthenticatableContract
         'masaKerjaTahun',
         'masaKerjaBulan',
     ];
+
+    // Check if the user is an admin
+    public function isAdmin()
+    {
+        return $this->roleId === 1; // Assuming roleId 1 represents admin role
+    }
+
+    // Check if the user is a regular user
+    public function isUser()
+    {
+        return $this->roleId === 2; // Assuming roleId 2 represents regular user role
+    }
 }
 class User extends Model
 {
