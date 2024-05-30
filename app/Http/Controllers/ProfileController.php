@@ -13,7 +13,7 @@ class ProfileController extends Controller
     // Logic untuk menampilkan halaman profile
     return view('profile');
 }
-public function index2()
+public function profileAdmin()
 {
     // Logic untuk menampilkan halaman profile
     return view('profile_admin');

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Pegawai</title>
+  <title>Kenaikan Gaji Berkala</title>
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
@@ -15,7 +15,7 @@
             <img src="{{ asset('image/logo BKPSDM.png') }}" class="img-fluid" alt="Deskripsi Gambar">
             <ul class="list-group">
                 <li id="home-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/home') }}';">Home</li> <br>
-                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/profile') }}';">Profile</li>
+                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/home/profile') }}';">Profile</li>
                 
             </ul>
         </div>

@@ -71,7 +71,7 @@ class PegawaiController extends Controller
         
         $user->save();
 
-        return redirect('/home/users')->with('success', 'User added successfully');
+        return redirect('/admin/users')->with('success', 'User added successfully');
     }
 
     // Function to get all user data
@@ -116,7 +116,7 @@ class PegawaiController extends Controller
             $user->masaKerjaBulan = $request->masaKerjaBulan;
             $user->save();
 
-            return redirect('/home/users')->with('success', 'Pegawai berhasil ditambahkan');
+            return redirect('/admin/users')->with('success', 'Pegawai berhasil ditambahkan');
         } elseif ($request->action == 'edit') {
             return $this->editUser($request);
         }
@@ -127,7 +127,7 @@ class PegawaiController extends Controller
         $user = Pegawai::find($id);
 
         if (!$user) {
-            return redirect('/home/users')->with('error', 'User not found');
+            return redirect('/admin/users')->with('error', 'User not found');
         }
 
         $user->roleId = $request->roleId;
