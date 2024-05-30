@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
-
+use Carbon\Carbon;
 
 class PegawaiController extends Controller
 {
@@ -16,6 +16,24 @@ class PegawaiController extends Controller
     {
         $id = Session::get('userId');
         $users = Pegawai::all();
+        foreach ($users as $user) {
+            // if ($datas) {
+            //     $golonganPangkat = $datas->golonganPangkat;
+            //     $masaKerjaTahun = $datas->masaKerjaTahun;
+            //     $masaKerjaBulan = $datas->masaKerjaBulan;
+            //     $tmtGolongan = Carbon::parse($datas->tmtGolongan);
+            //     $timeToKGB = $this->calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan);
+            //     $kgbDate = $tmtGolongan->addMonths($timeToKGB);
+            //     $yearKGB = $timeToKGB-$masaKerjaTahun;
+            // } else {
+            //     $kgbDate = null;
+            //     $yearKGB = null;
+            // }
+            $tmtGolongan = Carbon::parse($user->tmtGolongan);
+            $user->timeToKGB = $this->calculateTimeToKGB($user->golonganPangkat, $user->masaKerjaTahun, $user->masaKerjaBulan);
+            $kgbDate = $tmtGolongan->addMonths($user->timeToKGB);
+            $user->kgbDate = $kgbDate->format('Y-m-d');
+        }
         return view('admin_edit', ['users' => $users, 'id' => $id, 'query' => '']);
     }
     public function editUserForm()
@@ -197,6 +215,27 @@ class PegawaiController extends Controller
         $user->save();
 
         return redirect()->route('user-list')->with('success', 'User updated successfully');
+    }
+    private function calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan)
+    {
+        $evenMasaKerja = $masaKerjaTahun % 2 === 0;
+
+        if (in_array($golonganPangkat, ['III/a', 'III/b', 'III/c', 'III/d', 'IV/a', 'IV/b', 'IV/c', 'IV/d', 'I/a'])) {
+            $timeToKGB = $evenMasaKerja ? 24 : 12;
+        } elseif (in_array($golonganPangkat, ['I/b', 'I/c', 'I/d', 'II/a', 'II/b', 'II/c', 'II/d'])) {
+            $timeToKGB = $evenMasaKerja ? 12 : 24;
+            if (in_array($golonganPangkat, ['I/b', 'I/c', 'I/d', 'II/b', 'II/c', 'II/d'])) {
+                $masaKerjaTahun = max(0, $masaKerjaTahun - 3);
+            }
+            if ($golonganPangkat == 'II/a' && $masaKerjaTahun <= 1) {
+                $timeToKGB = 0;
+            }
+        } else {
+            $timeToKGB = 12;
+        }
+
+        $timeToKGB -= $masaKerjaBulan;
+        return $timeToKGB;
     }
 
 }

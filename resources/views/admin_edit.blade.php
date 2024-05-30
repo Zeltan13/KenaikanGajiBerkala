@@ -44,6 +44,7 @@
                     <th>TMT Pegawai</th>
                     <th>Masa Kerja (Tahun)</th>
                     <th>Masa Kerja (Bulan)</th>
+                    <th>Kenaikan Gaji Berkala</th> <!-- New Column for KGB -->
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -53,14 +54,15 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->nip }}</td>
                     <td>{{ $user->nama }}</td>
-                    <td>{{ $user->satuanKerja}}</td>
-                    <td>{{ $user->golonganPangkat}}</td>
-                    <td>{{ $user->tmtGolongan}}</td>
-                    <td>{{ $user->tmtJabatan}}</td>
-                    <td>{{ $user->statusPegawai}}</td>
-                    <td>{{ $user->tmtPegawai}}</td>
-                    <td>{{ $user->masaKerjaTahun}}</td>
-                    <td>{{ $user->masaKerjaBulan}}</td>
+                    <td>{{ $user->satuanKerja }}</td>
+                    <td>{{ $user->golonganPangkat }}</td>
+                    <td>{{ $user->tmtGolongan }}</td>
+                    <td>{{ $user->tmtJabatan }}</td>
+                    <td>{{ $user->statusPegawai }}</td>
+                    <td>{{ $user->tmtPegawai }}</td>
+                    <td>{{ $user->masaKerjaTahun }}</td>
+                    <td>{{ $user->masaKerjaBulan }}</td>
+                    <td>{{ $user->kgbDate }}</td> <!-- Display KGB -->
                     <td>
                         <a href="{{ route('editUser', $user->id) }}" class="btn btn-secondary">Edit</a>
                         <form action="{{ route('delete-user', $user->id) }}" method="POST" style="display:inline-block;">
@@ -73,7 +75,10 @@
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('add-user-form') }}" class="btn btn-primary">Tambah Pegawai</a>
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ route('add-user-form') }}" class="btn btn-primary">Tambah Pegawai</a>
+            <a href="{{ url('/admin') }}" class="btn btn-primary">Kembali</a> <!-- Kembali Button -->
+        </div>
     </div>
 </body>
 </html>

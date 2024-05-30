@@ -24,13 +24,28 @@ class HomeController extends Controller
             $tmtGolongan = Carbon::parse($datas->tmtGolongan);
             $timeToKGB = $this->calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan);
             $kgbDate = $tmtGolongan->addMonths($timeToKGB);
-            $yearKGB = $timeToKGB-$masaKerjaTahun;
+
+            $yearsNeeded = intdiv($timeToKGB, 12);
+            $monthsNeeded = $timeToKGB % 12;
+            $yearKGB = $masaKerjaTahun + $yearsNeeded;
+            $monthKGB = $masaKerjaBulan + $monthsNeeded;
+            if ($monthKGB>=12){
+                $monthKGB -=12;
+                $yearKGB += 1;
+            }
         } else {
             $kgbDate = null;
             $yearKGB = null;
+            $monthKGB = null;
         }
 
-        return view('home', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate, 'yearKGB' => $yearKGB]);
+        return view('home', [
+            'dataStatisUser' => $user,
+            'dataDinamisUser' => $datas,
+            'kgbDate' => $kgbDate,
+            'yearKGB' => $yearKGB,
+            'monthKGB' => $monthKGB
+        ]);
     }
 
     public function admin()
@@ -47,13 +62,29 @@ class HomeController extends Controller
             $tmtGolongan = Carbon::parse($datas->tmtGolongan);
             $timeToKGB = $this->calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan);
             $kgbDate = $tmtGolongan->addMonths($timeToKGB);
-            $yearKGB = $tmtGolongan->year;
+            
+            $yearsNeeded = intdiv($timeToKGB, 12);
+            $monthsNeeded = $timeToKGB % 12;
+            $yearKGB = $masaKerjaTahun + $yearsNeeded;
+            $monthKGB = $masaKerjaBulan + $monthsNeeded;
+            if ($monthKGB>=12){
+                $monthKGB -=12;
+                $yearKGB += 1;
+            }
         } else {
             $kgbDate = null;
             $yearKGB = null;
+            $monthKGB = null;
         }
 
-        return view('home_admin', ['dataStatisUser' => $user, 'dataDinamisUser' => $datas, 'kgbDate' => $kgbDate, 'yearKGB' => $yearKGB]);
+        return view('home_admin', [
+            'dataStatisUser' => $user,
+            'dataDinamisUser' => $datas,
+            'kgbDate' => $kgbDate,
+            'yearKGB' => $yearKGB,
+            'monthKGB' => $monthKGB
+        ]);
+        
     }
 
     private function calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan)
