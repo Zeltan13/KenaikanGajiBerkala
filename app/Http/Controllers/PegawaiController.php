@@ -176,6 +176,30 @@ class PegawaiController extends Controller
 
         return view('admin_edit', ['users' => $users, 'query' => $query]);
     }
+    // public function searchUser(Request $request)
+    // {
+    //     $query = $request->input('query');
+    //     $filterSatuanKerja = $request->input('satuanKerja');
+    //     $filterKGBDate = $request->input('kgbDate'); 
+
+    //     $users = Pegawai::where(function ($queryBuilder) use ($query, $filterSatuanKerja, $filterKGBDate) {
+    //             $queryBuilder->where('nama', 'LIKE', "%$query%")
+    //                         ->orWhere('nip', 'LIKE', "%$query%");
+
+    //             // Filter Satuan Kerja if provided
+    //             if ($filterSatuanKerja) {
+    //                 $queryBuilder->where('satuanKerja', $filterSatuanKerja);
+    //             }
+
+    //             // Filter Kenaikan Gaji Berkala if provided
+    //             if ($filterKGBDate) {
+    //                 $queryBuilder->where('kgbDate', $filterKGBDate);
+    //             }
+    //         })
+    //         ->get();
+
+    //     return view('admin_edit', ['users' => $users, 'query' => $query]);
+    // }
     
    
     public function update(Request $request, $id)

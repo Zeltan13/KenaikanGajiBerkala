@@ -27,6 +27,7 @@ Route::middleware([\App\Http\Middleware\AdminMiddleware::class, 'auth'])->group(
 
     Route::post('/save-user', [PegawaiController::class, 'saveUser'])->name('save-user');
     Route::post('/admin/users/{id}/edit', [PegawaiController::class, 'update'])->name('updateUser');
+    Route::get('/admin/users/search', [PegawaiController::class, 'searchUser'])->name('search-user');
 
     //Route admin perlu dicek
     Route::get('/admin/users/{id}/edit', [PegawaiController::class, 'edit'])->name('editUser');
@@ -34,7 +35,7 @@ Route::middleware([\App\Http\Middleware\AdminMiddleware::class, 'auth'])->group(
     Route::get('/admin/users/edit', [PegawaiController::class, 'editUserForm'])->name('edit-user-form');
     Route::post('/admin/users/{id}/edit', [PegawaiController::class, 'editUser'])->name('edit-user');
     Route::delete('/admin/users/{id}', [PegawaiController::class, 'deleteUser'])->name('delete-user');
-    Route::get('/admin/users/search', [PegawaiController::class, 'searchUser'])->name('search-user');
+    
     Route::get('/admin/users/{id}/edit', [PegawaiController::class, 'edit'])->name('editUser');//edit, product.edit
 });
 

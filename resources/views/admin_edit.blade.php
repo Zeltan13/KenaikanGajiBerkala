@@ -29,6 +29,13 @@
                 <button type="submit" class="btn btn-primary ml-2">Search</button>
             </form>
         </div>
+        <!-- <div class="d-flex justify-content-end mb-3">
+            <form action="{{ route('search-user') }}" method="GET" class="form-inline">
+                <input type="text" name="satuanKerja" class="form-control" placeholder="Filter Satuan Kerja">
+                <input type="month" name="kgbDate" class="form-control" placeholder="Filter KGB Month">
+                <button type="submit" class="btn btn-primary ml-2">Filter</button>
+            </form>
+        </div> -->
 
         <table class="table table-striped">
             <thead>
@@ -44,7 +51,7 @@
                     <th>TMT Pegawai</th>
                     <th>Masa Kerja (Tahun)</th>
                     <th>Masa Kerja (Bulan)</th>
-                    <th>Kenaikan Gaji Berkala</th> <!-- New Column for KGB -->
+                    <th>Kenaikan Gaji Berkala</th> 
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -62,7 +69,7 @@
                     <td>{{ $user->tmtPegawai }}</td>
                     <td>{{ $user->masaKerjaTahun }}</td>
                     <td>{{ $user->masaKerjaBulan }}</td>
-                    <td>{{ $user->kgbDate }}</td> <!-- Display KGB -->
+                    <td>{{ $user->kgbDate }}</td>
                     <td>
                         <a href="{{ route('editUser', $user->id) }}" class="btn btn-secondary">Edit</a>
                         <form action="{{ route('delete-user', $user->id) }}" method="POST" style="display:inline-block;">
@@ -77,7 +84,7 @@
         </table>
         <div class="d-flex justify-content-between mt-4">
             <a href="{{ route('add-user-form') }}" class="btn btn-primary">Tambah Pegawai</a>
-            <a href="{{ url('/admin') }}" class="btn btn-primary">Kembali</a> <!-- Kembali Button -->
+            <a href="{{ url('/admin') }}" class="btn btn-primary">Kembali</a> 
         </div>
     </div>
 </body>
