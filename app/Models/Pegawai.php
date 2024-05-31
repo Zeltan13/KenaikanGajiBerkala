@@ -27,6 +27,7 @@ class Pegawai extends Model implements AuthenticatableContract
         'tmtPegawai',
         'masaKerjaTahun',
         'masaKerjaBulan',
+        'kenaikanGajiBerkala',
     ];
 
     // Check if the user is an admin

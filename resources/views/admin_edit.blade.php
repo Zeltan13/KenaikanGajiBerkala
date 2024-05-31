@@ -25,17 +25,14 @@
         <!-- Search Bar -->
         <div class="d-flex justify-content-end mb-3">
             <form action="{{ route('search-user') }}" method="GET" class="form-inline">
-                <input type="text" name="query" class="form-control" placeholder="Search...">
-                <button type="submit" class="btn btn-primary ml-2">Search</button>
+                <input type="text" name="satuanKerja" class="form-control" placeholder="Filter Satuan Kerja" value="{{ request()->input('satuanKerja') }}">
+                <input type="month" name="kgbDate" class="form-control ml-2" placeholder="Filter KGB Month" value="{{ request()->input('kgbDate') }}">
+                <button type="submit" class="btn btn-primary ml-2" style="margin-top: 10px;">Filter</button>
+                @if(request()->has('satuanKerja') || request()->has('kgbDate'))
+                    <a href="{{ route('search-user', array_merge(request()->except(['page', 'satuanKerja', 'kgbDate']), ['page' => null])) }}" class="btn btn-danger ml-2" style="margin-left: 130px; margin-top: 10px;">Remove Filter</a>
+                @endif
             </form>
         </div>
-        <!-- <div class="d-flex justify-content-end mb-3">
-            <form action="{{ route('search-user') }}" method="GET" class="form-inline">
-                <input type="text" name="satuanKerja" class="form-control" placeholder="Filter Satuan Kerja">
-                <input type="month" name="kgbDate" class="form-control" placeholder="Filter KGB Month">
-                <button type="submit" class="btn btn-primary ml-2">Filter</button>
-            </form>
-        </div> -->
 
         <table class="table table-striped">
             <thead>
@@ -69,7 +66,7 @@
                     <td>{{ $user->tmtPegawai }}</td>
                     <td>{{ $user->masaKerjaTahun }}</td>
                     <td>{{ $user->masaKerjaBulan }}</td>
-                    <td>{{ $user->kgbDate }}</td>
+                    <td>{{ $user->kenaikanGajiBerkala }}</td>
                     <td>
                         <a href="{{ route('editUser', $user->id) }}" class="btn btn-secondary">Edit</a>
                         <form action="{{ route('delete-user', $user->id) }}" method="POST" style="display:inline-block;">

@@ -29,10 +29,14 @@ class HomeController extends Controller
             $monthsNeeded = $timeToKGB % 12;
             $yearKGB = $masaKerjaTahun + $yearsNeeded;
             $monthKGB = $masaKerjaBulan + $monthsNeeded;
-            if ($monthKGB>=12){
-                $monthKGB -=12;
+            if ($monthKGB >= 12) {
+                $monthKGB -= 12;
                 $yearKGB += 1;
             }
+
+            // Save the calculated KGB date to the database
+            $datas->kenaikanGajiBerkala = $kgbDate;
+            $datas->save();
         } else {
             $kgbDate = null;
             $yearKGB = null;
@@ -47,6 +51,7 @@ class HomeController extends Controller
             'monthKGB' => $monthKGB
         ]);
     }
+
 
     public function admin()
     {
@@ -71,6 +76,10 @@ class HomeController extends Controller
                 $monthKGB -=12;
                 $yearKGB += 1;
             }
+            
+            // Save the calculated KGB date to the database
+            $datas->kenaikanGajiBerkala = $kgbDate;
+            $datas->save();
         } else {
             $kgbDate = null;
             $yearKGB = null;

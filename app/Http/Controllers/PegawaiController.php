@@ -16,23 +16,20 @@ class PegawaiController extends Controller
     {
         $id = Session::get('userId');
         $users = Pegawai::all();
+        $datas = Pegawai::all();
         foreach ($users as $user) {
-            // if ($datas) {
-            //     $golonganPangkat = $datas->golonganPangkat;
-            //     $masaKerjaTahun = $datas->masaKerjaTahun;
-            //     $masaKerjaBulan = $datas->masaKerjaBulan;
-            //     $tmtGolongan = Carbon::parse($datas->tmtGolongan);
-            //     $timeToKGB = $this->calculateTimeToKGB($golonganPangkat, $masaKerjaTahun, $masaKerjaBulan);
-            //     $kgbDate = $tmtGolongan->addMonths($timeToKGB);
-            //     $yearKGB = $timeToKGB-$masaKerjaTahun;
-            // } else {
-            //     $kgbDate = null;
-            //     $yearKGB = null;
-            // }
+            $tempId = $user->id;
             $tmtGolongan = Carbon::parse($user->tmtGolongan);
             $user->timeToKGB = $this->calculateTimeToKGB($user->golonganPangkat, $user->masaKerjaTahun, $user->masaKerjaBulan);
             $kgbDate = $tmtGolongan->addMonths($user->timeToKGB);
             $user->kgbDate = $kgbDate->format('Y-m-d');
+            
+            // Find the user in $datas by $tempId
+            $data = $datas->find($tempId);
+
+            // Update the calculated KGB date for the found user
+            $data->kenaikanGajiBerkala = $kgbDate->format('Y-m-d'); // Set the kenaikanGajiBerkala attribute
+            $data->save(); // Save the user to the database
         }
         return view('admin_edit', ['users' => $users, 'id' => $id, 'query' => '']);
     }
@@ -69,6 +66,11 @@ class PegawaiController extends Controller
         $user->masaKerjaTahun = $request->masaKerjaTahun;
         $user->masaKerjaBulan = $request->masaKerjaBulan;
         
+        $timeToKGB = $this->calculateTimeToKGB($user->golonganPangkat, $user->masaKerjaTahun, $user->masaKerjaBulan);
+        $kgbDate = $user->tmtGolongan->addMonths($user->timeToKGB);
+        $kgbDate = $kgbDate->format('Y-m-d');
+        $user->kenaikanGajiBerkala = $kgbDate->format('Y-m-d'); 
+
         $user->save();
 
         return redirect('/admin/users')->with('success', 'User added successfully');
@@ -88,9 +90,7 @@ class PegawaiController extends Controller
         }
         return view('editUser', ['user' => $user]);
     }
-    // public function edit(Pegawai $pegawai){
-    //     return view('editUser',['pegawai'=>$pegawai]);
-    // }
+
     public function edit($id)
     {
         $user = Pegawai::findOrFail($id);
@@ -165,42 +165,32 @@ class PegawaiController extends Controller
 }
 
 
-    // Function to search users
     public function searchUser(Request $request)
     {
         $query = $request->input('query');
-        $users = Pegawai::where('nama', 'LIKE', "%$query%")
-                        ->orWhere('nip', 'LIKE', "%$query%")
-                        ->orWhere('satuanKerja', 'LIKE', "%$query%")
-                        ->get();
+        $filterSatuanKerja = $request->input('satuanKerja');
+        $filterKGBDate = $request->input('kgbDate'); // Expected format: YYYY-MM
+
+        $users = Pegawai::where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('nama', 'LIKE', "%$query%")
+                            ->orWhere('nip', 'LIKE', "%$query%");
+            })
+            // Filter Satuan Kerja if provided
+            ->when($filterSatuanKerja, function ($queryBuilder) use ($filterSatuanKerja) {
+                return $queryBuilder->where('satuanKerja', 'LIKE', "%$filterSatuanKerja%");
+            })
+            // Filter Kenaikan Gaji Berkala if provided
+            ->when($filterKGBDate, function ($queryBuilder) use ($filterKGBDate) {
+                [$year, $month] = explode('-', $filterKGBDate);
+                return $queryBuilder->whereYear('kenaikanGajiBerkala', $year)
+                                    ->whereMonth('kenaikanGajiBerkala', $month);
+            })
+            ->get();
 
         return view('admin_edit', ['users' => $users, 'query' => $query]);
     }
-    // public function searchUser(Request $request)
-    // {
-    //     $query = $request->input('query');
-    //     $filterSatuanKerja = $request->input('satuanKerja');
-    //     $filterKGBDate = $request->input('kgbDate'); 
 
-    //     $users = Pegawai::where(function ($queryBuilder) use ($query, $filterSatuanKerja, $filterKGBDate) {
-    //             $queryBuilder->where('nama', 'LIKE', "%$query%")
-    //                         ->orWhere('nip', 'LIKE', "%$query%");
 
-    //             // Filter Satuan Kerja if provided
-    //             if ($filterSatuanKerja) {
-    //                 $queryBuilder->where('satuanKerja', $filterSatuanKerja);
-    //             }
-
-    //             // Filter Kenaikan Gaji Berkala if provided
-    //             if ($filterKGBDate) {
-    //                 $queryBuilder->where('kgbDate', $filterKGBDate);
-    //             }
-    //         })
-    //         ->get();
-
-    //     return view('admin_edit', ['users' => $users, 'query' => $query]);
-    // }
-    
    
     public function update(Request $request, $id)
     {
