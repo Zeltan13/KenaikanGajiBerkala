@@ -9,7 +9,7 @@ use App\Http\Controllers\ProfileController;
 //Route User/Pegawai uah rapih
 Route::middleware([\App\Http\Middleware\UserMiddleware::class, 'auth'])->group(function () {
     Route::get('/home',[HomeController::class,'index']);
-    Route::get('/home/users',[Pegawai::class,'getAllUsers']);
+    Route::get('/home/users',[Pegawai::class,'getAllUsers']);//
     Route::get('/home/userdata',[Pegawai::class,'getAllUserData']);// ga perlu
     Route::get('/home/profile', [ProfileController::class, 'index']);
     Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
@@ -32,6 +32,7 @@ Route::middleware([\App\Http\Middleware\AdminMiddleware::class, 'auth'])->group(
     //Route admin perlu dicek
     Route::get('/admin/users/{id}/edit', [PegawaiController::class, 'edit'])->name('editUser');
     Route::post('/admin/users/edit', [PegawaiController::class, 'editUser'])->name('edit-user');
+    
     Route::get('/admin/users/edit', [PegawaiController::class, 'editUserForm'])->name('edit-user-form');
     Route::post('/admin/users/{id}/edit', [PegawaiController::class, 'editUser'])->name('edit-user');
     Route::delete('/admin/users/{id}', [PegawaiController::class, 'deleteUser'])->name('delete-user');

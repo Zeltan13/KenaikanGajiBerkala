@@ -37,10 +37,10 @@ class AuthController extends Controller
 
                 $role = $user->roleId;
                 Session::put('role', $role);
-                if ($role == 1) {
-                    return redirect('/admin')->with('success', 'Login Berhasil');
-                } else {
+                if ($role == 2) {
                     return redirect('/home')->with('success', 'Login Berhasil');
+                } else {
+                    return redirect('/admin')->with('success', 'Login Berhasil');
                 }
             }  
         } else {
