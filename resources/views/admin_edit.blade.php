@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ asset('css/addUser.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/adminEdit.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <title>Daftar Pegawai</title>
@@ -29,14 +29,14 @@
                 <input type="text" name="query" class="form-control" placeholder="Filter Berdasarkan Nama atau NIP" value="{{ request()->input('query') }}">
                 <input type="text" name="satuanKerja" class="form-control ml-2" placeholder="Filter Satuan Kerja" value="{{ request()->input('satuanKerja') }}">
                 <input type="month" name="kgbDate" class="form-control ml-2" placeholder="Filter KGB Month" value="{{ request()->input('kgbDate') }}">
-                <button type="submit" class="btn btn-primary ml-2" style="margin-top: 10px;">Filter</button>
+                <button type="submit" class="btn btn-primary ml-2">Filter</button>
                 @if(request()->has('query') || request()->has('satuanKerja') || request()->has('kgbDate'))
-                    <a href="{{ route('search-user', array_merge(request()->except(['page', 'query', 'satuanKerja', 'kgbDate']), ['page' => null])) }}" class="btn btn-danger ml-2" style="margin-left: 130px; margin-top: 10px;">Remove Filter</a>
+                    <a href="{{ route('search-user', array_merge(request()->except(['page', 'query', 'satuanKerja', 'kgbDate']), ['page' => null])) }}" class="btn btn-danger ml-2">Remove Filter</a>
                 @endif
             </form>
         </div>
-
-        <table class="table table-striped">
+        
+        <table class="table table-striped col-md-9 col-sm-8">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -109,9 +109,9 @@
             <form action="{{ route('search-user') }}" method="GET" class="form-inline">
                 <input type="text" name="query" class="form-control" placeholder="Filter Berdasarkan Nama atau NIP" value="{{ request()->input('query') }}">
                 <input type="month" name="kgbDate" class="form-control ml-2" placeholder="Filter KGB Month" value="{{ request()->input('kgbDate') }}">
-                <button type="submit" class="btn btn-primary ml-2" style="margin-top: 10px;">Filter</button>
+                <button type="submit" class="btn btn-primary ml-2">Filter</button>
                 @if(request()->has('query') || request()->has('kgbDate'))
-                    <a href="{{ route('search-user', array_merge(request()->except(['page', 'query', 'satuanKerja', 'kgbDate']), ['page' => null])) }}" class="btn btn-danger ml-2" style="margin-left: 130px; margin-top: 10px;">Remove Filter</a>
+                    <a href="{{ route('search-user', array_merge(request()->except(['page', 'query', 'satuanKerja', 'kgbDate']), ['page' => null])) }}" class="btn btn-danger ml-2">Remove Filter</a>
                 @endif
             </form>
         </div>
@@ -150,12 +150,14 @@
                     <td>{{ $user->masaKerjaBulan }}</td>
                     <td>{{ $user->kenaikanGajiBerkala }}</td>
                     <td>
+                    <div class="action-buttons">
                         <a href="{{ route('editUser', $user->id) }}" class="btn btn-secondary">Edit</a>
                         <form action="{{ route('delete-user', $user->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                         </form>
+                    </div>
                     </td>
                 </tr>
                 @endforeach

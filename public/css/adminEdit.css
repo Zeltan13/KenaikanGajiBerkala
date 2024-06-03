@@ -1,0 +1,52 @@
+.container {
+    margin-top: 50px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+    margin-top: 20px;
+}
+
+.form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}
+
+.form-inline .btn {
+    vertical-align: middle;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table-striped tbody tr.table-warning {
+    background-color: #ffffff;
+}
+
+.table-striped thead th {
+    background-color: #7dfff8;
+}
+
+.table-striped tbody tr {
+    background-color: #ffffff;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #ffffff;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #b3b3b3;
+}
+
+.d-flex {
+  
+    margin-right: 10px;
+}
+

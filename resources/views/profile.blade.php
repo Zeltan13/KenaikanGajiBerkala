@@ -11,18 +11,16 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-md-2 col-sm-4 mt-sm-4 bg-light border">
+      <div class="col-md-3 col-sm-4">
         <div class="sidebar">
-            <img src="{{ asset('image/logo BKPSDM.png') }}" class="img-fluid" alt="Deskripsi Gambar">
-            <ul class="list-group">
-                <li id="home-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/home') }}';">Home</li> <br>
-                <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/home/profile') }}';">Profile</li>
-            </ul>
+          <img src="{{ asset('image/logo BKPSDM.png') }}" class="img-fluid mb-4" alt="Deskripsi Gambar">
+          <ul class="list-group">
+            <li id="home-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/home') }}';">Home</li>
+            <li id="profile-box" class="list-group-item text-center" onclick="window.location.href='{{ url('/home/profile') }}';">Profile</li>
+          </ul>
         </div>
       </div>
-      <div class="col-md-10 col-sm-10 mt-sm-4 border">
-        <div class="row">
-          <div class="col-md-10 mb-sm-5">
+      <div class="content col-md-9 col-sm-8">
             <h3>Menu Profil</h3>
             <form action="{{ route('update-password') }}" method="POST">
               @csrf
