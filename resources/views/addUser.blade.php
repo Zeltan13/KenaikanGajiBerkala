@@ -130,11 +130,11 @@
                 <input type="text" class="form-control" id="golonganPangkat" name="golonganPangkat" value="{{ isset($user) ? $user->golonganPangkat : '' }}" required>
             </div>
             <div class="mb-3">
-                <label for="tmtGolongan" class="form-label">TMT Golongan</label>
+                <label for="tmtGolongan" class="form-label">TMT Golongan (format : YYYY-MM-DD)</label>
                 <input type="text" class="form-control" id="tmtGolongan" name="tmtGolongan" value="{{ isset($user) ? $user->tmtGolongan : '' }}" required>
             </div>
             <div class="mb-3">
-                <label for="tmtJabatan" class="form-label">TMT Jabatan</label>
+                <label for="tmtJabatan" class="form-label">TMT Jabatan (format : YYYY-MM-DD)</label>
                 <input type="text" class="form-control" id="tmtJabatan" name="tmtJabatan" value="{{ isset($user) ? $user->tmtJabatan : '' }}" required>
             </div>
             <div class="mb-3">
@@ -142,7 +142,7 @@
                 <input type="text" class="form-control" id="statusPegawai" name="statusPegawai" value="{{ isset($user) ? $user->statusPegawai : '' }}" required>
             </div>
             <div class="mb-3">
-                <label for="tmtPegawai" class="form-label">TMT Pegawai</label>
+                <label for="tmtPegawai" class="form-label">TMT Pegawai (format : YYYY-MM-DD)</label>
                 <input type="text" class="form-control" id="tmtPegawai" name="tmtPegawai" value="{{ isset($user) ? $user->tmtPegawai : '' }}" required>
             </div>
             <div class="mb-3">

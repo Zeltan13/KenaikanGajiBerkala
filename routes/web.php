@@ -38,6 +38,7 @@ Route::middleware([\App\Http\Middleware\AdminMiddleware::class, 'auth'])->group(
     Route::delete('/admin/users/{id}', [PegawaiController::class, 'deleteUser'])->name('delete-user');
     
     Route::get('/admin/users/{id}/edit', [PegawaiController::class, 'edit'])->name('editUser');//edit, product.edit
+    Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
 });
 
 // Route Authentikasi

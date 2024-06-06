@@ -21,10 +21,12 @@ class PegawaiController extends Controller
 
         // Define $users based on the role
         if ($role === 1) {
-            $users = Pegawai::all();
+            $users = Pegawai::paginate(50); // Use paginate() here
         } else if ($role >= 3 && $role <= 65) {
             $satuanKerja = $this->getSatuanKerjaByRole($role);
-            $users = Pegawai::where('satuanKerja', $satuanKerja)->get();
+            $users = Pegawai::where('satuanKerja', $satuanKerja)->paginate(50); // Use paginate() here
+        } else {
+            $users = collect(); // Empty collection for unauthorized roles
         }
 
         // Process the users
@@ -184,8 +186,8 @@ class PegawaiController extends Controller
 }
 
 
-    public function searchUser(Request $request){
-        $users;
+public function searchUser(Request $request)
+    {
         $role = Session::get('role');
         $query = $request->input('query');
         $filterSatuanKerja = $request->input('satuanKerja');
@@ -193,9 +195,9 @@ class PegawaiController extends Controller
 
         $baseQuery = Pegawai::query();
 
-        if ($role === 1){
-            $users = Pegawai::all();
-        }else if ($role >= 3 && $role <= 65) {
+        if ($role === 1) {
+            $baseQuery = Pegawai::query();
+        } else if ($role >= 3 && $role <= 65) {
             $satuanKerja = $this->getSatuanKerjaByRole($role);
             $baseQuery = $baseQuery->where('satuanKerja', $satuanKerja);
         }
@@ -217,98 +219,10 @@ class PegawaiController extends Controller
                                    ->whereMonth('kenaikanGajiBerkala', $month);
         }
 
-        $users = $baseQuery->get();
-        // $query = $request->input('query');
-        // $filterSatuanKerja = $request->input('satuanKerja');
-        // $filterKGBDate = $request->input('kgbDate'); // Expected format: YYYY-MM
-        // if ($role === 1){
-        //     $users = Pegawai::where(function ($queryBuilder) use ($query) {
-        //         $queryBuilder->where('nama', 'LIKE', "%$query%")
-        //                     ->orWhere('nip', 'LIKE', "%$query%");
-        //     })
-        //     // Filter Satuan Kerja if provided
-        //     ->when($filterSatuanKerja, function ($queryBuilder) use ($filterSatuanKerja) {
-        //         return $queryBuilder->where('satuanKerja', 'LIKE', "%$filterSatuanKerja%");
-        //     })
-        //     // Filter Kenaikan Gaji Berkala if provided
-        //     ->when($filterKGBDate, function ($queryBuilder) use ($filterKGBDate) {
-        //         [$year, $month] = explode('-', $filterKGBDate);
-        //         return $queryBuilder->whereYear('kenaikanGajiBerkala', $year)
-        //                             ->whereMonth('kenaikanGajiBerkala', $month);
-        //     })
-        //     ->get();
-        // }else{
-        //     $users = Pegawai::where(function ($queryBuilder) use ($query) {
-        //         $departement;
-        //         $role = Session::get('role');
-        //         if ($role === 3){
-        //             $departement = "Dinas Cipta Karya, Bina Konstruksi dan Tata Ruang";
-        //         }
-        //         $queryBuilder->where('nama', 'LIKE', "%$query%")
-        //                     ->where('satuanKerja', $departement)
-        //                     ->orWhere('nip', 'LIKE', "%$query%");
-                            
-        //     })
-        //     // Filter Satuan Kerja if provided
-        //     ->when($filterSatuanKerja, function ($queryBuilder) use ($filterSatuanKerja) {
-        //         return $queryBuilder->where('satuanKerja', 'LIKE', "%$filterSatuanKerja%");
-        //     })
-        //     // Filter Kenaikan Gaji Berkala if provided
-        //     ->when($filterKGBDate, function ($queryBuilder) use ($filterKGBDate) {
-        //         [$year, $month] = explode('-', $filterKGBDate);
-        //         return $queryBuilder->whereYear('kenaikanGajiBerkala', $year)
-        //                             ->whereMonth('kenaikanGajiBerkala', $month);
-        //     })
-        //     ->get();
-        //     // $users = Pegawai::where('satuanKerja', "Dinas Cipta Karya, Bina Konstruksi dan Tata Ruang")->get();
-        //     // //var_dump($users);
-        // }
-        
+        $users = $baseQuery->paginate(50);
+
         return view('admin_edit', ['users' => $users, 'query' => $query]);
     }
-    // public function searchUser(Request $request){
-    //     $users = collect();
-    //     $role = Session::get('role');
-    //     $query = $request->input('query');
-    //     $filterSatuanKerja = $request->input('satuanKerja');
-    //     $filterKGBDate = $request->input('kgbDate'); // Expected format: YYYY-MM
-    
-    //     // Base query
-    //     $baseQuery = Pegawai::query();
-    
-    //     // Add role-based filtering
-    //     if ($role === 1) {
-    //         // Super admin can see all
-    //         $baseQuery = $baseQuery;
-    //     } else if ($role >= 3 && $role <= 65) {
-    //         // Role-specific filter
-    //         $satuanKerja = $this->getSatuanKerjaByRole($role);
-    //         $baseQuery = $baseQuery->where('satuanKerja', $satuanKerja);
-    //     }
-    
-    //     // Apply search query
-    //     if ($query) {
-    //         $baseQuery = $baseQuery->where(function ($queryBuilder) use ($query) {
-    //             $queryBuilder->where('nama', 'LIKE', "%$query%")
-    //                          ->orWhere('nip', 'LIKE', "%$query%");
-    //         });
-    //     }
-    
-    //     // Apply additional filters
-    //     if ($filterSatuanKerja) {
-    //         $baseQuery = $baseQuery->where('satuanKerja', 'LIKE', "%$filterSatuanKerja%");
-    //     }
-    //     if ($filterKGBDate) {
-    //         [$year, $month] = explode('-', $filterKGBDate);
-    //         $baseQuery = $baseQuery->whereYear('kenaikanGajiBerkala', $year)
-    //                                ->whereMonth('kenaikanGajiBerkala', $month);
-    //     }
-    
-    //     // Execute query
-    //     $users = $baseQuery->get();
-    
-    //     return view('admin_edit', compact('users'));
-    // }
     
     private function getSatuanKerjaByRole($role){
         $roles = [
@@ -444,3 +358,4 @@ class PegawaiController extends Controller
     }
 
 }
+

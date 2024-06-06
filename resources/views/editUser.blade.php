@@ -42,11 +42,11 @@
                 <input type="text" class="form-control" id="golonganPangkat" name="golonganPangkat" value="{{ $user->golonganPangkat }}" required>
             </div>
             <div class="mb-3">
-                <label for="tmtGolongan" class="form-label">TMT Golongan</label>
+                <label for="tmtGolongan" class="form-label">TMT Golongan (format : YYYY-MM-DD)</label>
                 <input type="text" class="form-control" id="tmtGolongan" name="tmtGolongan" value="{{ $user->tmtGolongan }}" required>
             </div>
             <div class="mb-3">
-                <label for="tmtJabatan" class="form-label">TMT Jabatan</label>
+                <label for="tmtJabatan" class="form-label">TMT Jabatan (format : YYYY-MM-DD)</label>
                 <input type="text" class="form-control" id="tmtJabatan" name="tmtJabatan" value="{{ $user->tmtJabatan }}" required>
             </div>
             <div class="mb-3">
@@ -54,7 +54,7 @@
                 <input type="text" class="form-control" id="statusPegawai" name="statusPegawai" value="{{ $user->statusPegawai }}" required>
             </div>
             <div class="mb-3">
-                <label for="tmtPegawai" class="form-label">TMT Pegawai</label>
+                <label for="tmtPegawai" class="form-label">TMT Pegawai (format : YYYY-MM-DD)</label>
                 <input type="text" class="form-control" id="tmtPegawai" name="tmtPegawai" value="{{ $user->tmtPegawai }}" required>
             </div>
             <div class="mb-3">
