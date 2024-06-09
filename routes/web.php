@@ -13,7 +13,6 @@ Route::middleware([\App\Http\Middleware\UserMiddleware::class, 'auth'])->group(f
     Route::get('/home/userdata',[Pegawai::class,'getAllUserData']);// ga perlu
     Route::get('/home/profile', [ProfileController::class, 'index']);
     Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
-    
 });
 
 
@@ -45,3 +44,4 @@ Route::middleware([\App\Http\Middleware\AdminMiddleware::class, 'auth'])->group(
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginPost'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');

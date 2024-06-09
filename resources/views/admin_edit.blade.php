@@ -9,7 +9,7 @@
     <title>Daftar Pegawai</title>
 </head>
 <body>
-    @if (session('role') === 1)
+    @if (session('role') != 2)
     <div class="container mt-5 col-md-8">
         <h1>Daftar Pegawai</h1>
         @if(session('success'))
@@ -83,7 +83,31 @@
         </table>
         <!-- Pagination Links -->
         <div class="d-flex justify-content-center">
-            {{ $users->links() }}
+    <ul class="pagination">
+        <li class="page-item {{ $users->onFirstPage() ? 'disabled' : '' }}">
+            <a class="page-link" href="{{ $users->previousPageUrl() }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+            <li class="page-item {{ $page == $users->currentPage() ? 'active' : '' }}">
+                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+            </li>
+        @endforeach
+
+        <li class="page-item {{ $users->hasMorePages() ? '' : 'disabled' }}">
+            <a class="page-link" href="{{ $users->nextPageUrl() }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+        <!-- Additional Buttons -->
+        <div class="d-flex justify-content-end mt-3">
+            <a href="{{ route('add-user-form') }}" class="btn btn-success mr-2">Tambah Pegawai</a>
+            <a href="/admin" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
     @else
@@ -94,4 +118,3 @@
     @endif
 </body>
 </html>
-           

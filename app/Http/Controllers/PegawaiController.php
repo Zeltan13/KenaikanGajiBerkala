@@ -21,7 +21,7 @@ class PegawaiController extends Controller
 
         // Define $users based on the role
         if ($role === 1) {
-            $users = Pegawai::paginate(50); // Use paginate() here
+            $users = Pegawai::paginate(50)->onEachSide(3);; // Use paginate() here
         } else if ($role >= 3 && $role <= 65) {
             $satuanKerja = $this->getSatuanKerjaByRole($role);
             $users = Pegawai::where('satuanKerja', $satuanKerja)->paginate(50); // Use paginate() here
@@ -63,22 +63,39 @@ class PegawaiController extends Controller
     return view('editUser', ['user' => $user]);
 }
     public function showAddForm()
-{
-    return view('addUser');
-}
+    {
+        $role = Session::get('role');
+        $satuanKerja = $this->getSatuanKerjaByRole($role);
+
+        return view('addUser', ['role' => $role, 'satuanKerja' => $satuanKerja]);
+    }
 
 
     // Function to add a user
     public function addUser(Request $request)
     {
-        $user = new Pegawai;
+        $role = Session::get('role');
+        $satuanKerja = $this->getSatuanKerjaByRole($role);
 
+        // Validasi jika pengguna biasa mencoba menambahkan pegawai dengan satuan kerja berbeda
+        if ($role !== 1 && $request->satuanKerja !== $satuanKerja) {
+            return redirect()->back()->withErrors(['satuanKerja' => 'Anda tidak diizinkan menambahkan pegawai dengan satuan kerja ini.']);
+        }
+
+        $user = new Pegawai;
         $user->roleId = $request->roleId;
         $user->nip = $request->nip;
-        $user->password = bcrypt($request->password); // Hashing the password
+        $user->password = bcrypt($request->password);
         $user->nama = $request->nama;
         $user->ttl = $request->ttl;
-        $user->satuanKerja = $request->satuanKerja;
+
+        // Jika role bukan admin super, set satuanKerja sesuai dengan role pengguna yang sedang login
+        if ($role !== 1) {
+            $user->satuanKerja = $satuanKerja;
+        } else {
+            $user->satuanKerja = $request->satuanKerja;
+        }
+
         $user->golonganPangkat = $request->golonganPangkat;
         $user->tmtGolongan = $request->tmtGolongan;
         $user->tmtJabatan = $request->tmtJabatan;
@@ -86,16 +103,16 @@ class PegawaiController extends Controller
         $user->tmtPegawai = $request->tmtPegawai;
         $user->masaKerjaTahun = $request->masaKerjaTahun;
         $user->masaKerjaBulan = $request->masaKerjaBulan;
-        
+
         $timeToKGB = $this->calculateTimeToKGB($user->golonganPangkat, $user->masaKerjaTahun, $user->masaKerjaBulan);
-        $kgbDate = $user->tmtGolongan->addMonths($user->timeToKGB);
-        $kgbDate = $kgbDate->format('Y-m-d');
-        $user->kenaikanGajiBerkala = $kgbDate->format('Y-m-d'); 
+        $kgbDate = Carbon::parse($user->tmtGolongan)->addMonths($timeToKGB);
+        $user->kenaikanGajiBerkala = $kgbDate->format('Y-m-d');
 
         $user->save();
 
         return redirect('/admin/users')->with('success', 'User added successfully');
     }
+
 
     // Function to get all user data
     public function getAllUserData()
